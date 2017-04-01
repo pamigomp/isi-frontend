@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="pl" data-ng-app="app" data-ng-strict-di class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="pl" data-ng-app="app" data-ng-strict-di class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="pl" data-ng-app="app" data-ng-strict-di class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="pl" data-ng-app="app" data-ng-strict-di class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>ISI - Kursy walut</title>
+        <meta name="description" content="Integracja Systemów Informacyjnych - kursy walut">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <link rel="shortcut icon" href="">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="assets/css/main.css">
+        <link rel="stylesheet" href="assets/css/animate.css">
+    </head>
+    <body>
+        <div class="container">
+            <header data-ui-view="header"></header>
+            <nav data-ui-view="menu" role="navigation"></nav>
+            <section data-ui-view="breadcrumbs"></section>
+            <section data-ui-view="content"></section>
+            <footer data-ui-view="footer"></footer>
+        </div>
+
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->     
+
+        <!-- In production use:
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+        <script src="build/angularjs-template-x.x.x.min.js></script>
+        -->
+        <!-- Bower scripts: -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>        
+        <script src="bower_components/chart.js/dist/Chart.min.js"></script>
+        <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
+        <!-- Application scripts: -->
+        <script src="core/app.js"></script>
+        <script src="core/app.routes.js"></script>
+        <script src="core/dataStorageService.js"></script>
+        <script src="core/navigation/breadcrumbsController.js"></script>
+        <script src="core/navigation/footerController.js"></script>
+        <script src="core/navigation/headerController.js"></script>
+        <script src="core/navigation/menuController.js"></script>
+        <script src="core/exchangeRates/exchangeRatesService.js"></script>
+        <script src="core/exchangeRates/exchangeRatesController.js"></script>
+        <script src="core/subscription/subscriptionService.js"></script>
+        <script src="core/subscription/subscriptionController.js"></script>
+        <script src="common/directives/aboutDirective.js"></script>
+        <script src="common/constants/constants.js"></script>
+    </body>
+</html>

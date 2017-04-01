@@ -1,0 +1,35 @@
+[
+    {
+        "labels": [
+            "Styczeń",
+            "Luty",
+            "Marzec",
+            "Kwiecień",
+            "Maj",
+            "Czerwiec",
+            "Lipiec",
+            "Sierpień",
+            "Wrzesień",
+            "Październik",
+            "Listopad",
+            "Grudzień"
+        ],
+        "series": "Seria A",
+        "data": [
+            [
+                6500,
+                5900,
+                8000,
+                8100,
+                5600,
+                5500,
+                4000,
+                4000,
+                1000,
+                6000,
+                4000,
+                2000
+            ]
+        ]
+    }
+]

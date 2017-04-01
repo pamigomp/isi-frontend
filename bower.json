@@ -1,0 +1,37 @@
+{
+  "name": "kursy-walut",
+  "description": "Exchange rates in Integration of Information Systems",
+  "license": "MIT",
+  "keywords": [
+    "AngularJS",
+    "angular",
+    "exchange",
+    "rates",
+    "integration",
+    "information",
+    "systems",
+    "johnpapa",
+    "styleguide",
+    "node",
+    "express"
+  ],
+  "authors": [
+    "Michal Pietrzak"
+  ],
+  "homepage": "https://github.com/pamigomp/isiFrontend",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pamigomp/isiFrontend.git"
+  },
+  "ignore": [],
+  "dependencies": {
+    "angular": "^1.6.3",
+    "angular-animate": "^1.6.3",
+    "angular-mocks": "^1.6.3",
+    "angular-ui-router": "^0.3.1",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.0",
+    "angular-chart.js": "^1.1.1"
+  },
+  "private": false
+}

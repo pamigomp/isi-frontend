@@ -1,0 +1,20 @@
+{
+    "name": "kursy-walut",
+    "description": "Exchange rates in Integration of Information Systems",
+    "keywords": [
+        "AngularJS",
+        "angular",
+        "exchange",
+        "rates",
+        "integration",
+        "information",
+        "systems",
+        "johnpapa",
+        "styleguide",
+        "node",
+        "express"
+    ],
+    "repository": "https://github.com/pamigomp/isiFrontend",
+    "success_url": "/",
+    "addons": []
+}
