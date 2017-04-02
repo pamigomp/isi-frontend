@@ -21,9 +21,11 @@
                 <input id="email" name="email" type="email" data-ng-model="SC.contact.email" class="form-control" required />
                 <span class="glyphicon form-control-feedback" data-ng-class="ContactForm.email.$valid ? 'glyphicon-ok' : (ContactForm.email.$pristine ? '' : 'glyphicon-remove')"></span>
             </div>
-            <div class="form-group has-feedback" data-ng-class="ContactForm.rates.$valid ? 'has-success' : (ContactForm.rates.$pristine ? '' : 'has-error')" data-ng-init="SC.loadRatesList()">
+            <div class="form-group has-feedback" data-ng-init="SC.loadRatesList()">
                 <label class="control-label" for="rates">Subskrybowane waluty:</label>
-                <select id="rates" name="rates" data-ng-options="rate.name as rate.name for rate in SC.ratesList|orderBy:'name'" data-ng-model="SC.contact.rates" class="form-control" required></select>
+                <div>
+                    <multiselect id="rates" name="rates" ms-header="Wybierz" ms-selected="Wybrano..." data-ng-model="SC.contact.rates" options="rate.name as rate.name for rate in SC.ratesList|orderBy:'name'" data-multiple="true" required></multiselect>
+                </div>
             </div>
             <div class="form-group has-feedback" data-ng-class="ContactForm.period.$valid ? 'has-success' : (ContactForm.period.$pristine ? '' : 'has-error')" data-ng-init="SC.loadPeriodsList()">
                 <label class="control-label" for="period">Okres subskrypcji:</label>
@@ -34,7 +36,7 @@
 </div>
 <div class="panel panel-default">
     <div class="panel-body" style="text-align: center;">
-        <button id="subscribe-btn" class="btn btn-success" data-ng-show="!SC.sendingSubscription" data-ng-click="SC.subscribe(SC.contact)" data-ng-disabled="ContactForm.$invalid">
+        <button id="subscribe-btn" class="btn btn-success" data-ng-show="!SC.sendingSubscription" data-ng-click="SC.subscribe(SC.contact)" data-ng-disabled="ContactForm.$invalid || !SC.contact.rates">
             Subskrybuj <span class="glyphicon glyphicon-send"></span></button>
         <button id="clear-btn" class="btn btn-danger" data-ng-show="!SC.sendingSubscription" data-ng-click="SC.clear()">
             Wyczyść <span class="glyphicon glyphicon-remove"></span></button>

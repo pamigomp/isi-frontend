@@ -21,9 +21,9 @@
                     .then(getExchangeRatesSuccess, getExchangeRatesFailure);
 
             function getExchangeRatesSuccess(exchangeRates) {
-                vm.labels = exchangeRates[0].labels;
+                vm.labels = exchangeRates[0].days;
                 vm.series = exchangeRates[0].series;
-                vm.data = exchangeRates[0].data;
+                vm.data = exchangeRates[0].values;
                 vm.errorLoadingRates = false;
                 vm.loadingRates = false;
             }
