@@ -10,8 +10,7 @@
         return {
             getExchangeRates: getExchangeRates,
             postSubscription: postSubscription,
-            getRates: getRates,
-            getPeriods: getPeriods
+            getRates: getRates
         };
 
         function getExchangeRates(condition) {
@@ -41,16 +40,7 @@
         function getRates() {
             return $http({
                 method: 'GET',
-//                url: 'http://localhost:8080/isi/rates'
-                url: 'assets/data/rates.json'
-            });
-        }
-
-        function getPeriods() {
-            return $http({
-                method: 'GET',
-//                url: 'http://localhost:8080/isi/periods'
-                url: 'assets/data/periods.json'
+                url: 'http://api.nbp.pl/api/exchangerates/tables/a/'
             });
         }
     }

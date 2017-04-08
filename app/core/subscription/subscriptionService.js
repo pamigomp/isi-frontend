@@ -10,8 +10,7 @@
     function subscriptionService(dataStorageService, $q) {
         return {
             postSubscription: postSubscription,
-            getRatesList: getRatesList,
-            getPeriodsList: getPeriodsList
+            getRatesList: getRatesList
         };
 
         function postSubscription(subscription) {
@@ -38,27 +37,15 @@
                     .then(getRatesSuccess, getRatesFailure);
 
             function getRatesSuccess(rateData) {
-                deferred.resolve(rateData.data);
+                var currencies = [];
+                for (var i = 0; i < rateData.data[0].rates.length; i++) {
+                    currencies.push({'targetCurrencyName': rateData.data[0].rates[i].currency, 'targetCurrencyCode': rateData.data[0].rates[i].code, 'baseCurrencyCode': 'ZL'});
+                }
+
+                deferred.resolve(currencies);
             }
 
             function getRatesFailure() {
-                deferred.reject();
-            }
-
-            return deferred.promise;
-        }
-
-        function getPeriodsList() {
-            var deferred = $q.defer();
-
-            dataStorageService.getPeriods()
-                    .then(getPeriodsSuccess, getPeriodsFailure);
-
-            function getPeriodsSuccess(periodData) {
-                deferred.resolve(periodData.data);
-            }
-
-            function getPeriodsFailure() {
                 deferred.reject();
             }
 

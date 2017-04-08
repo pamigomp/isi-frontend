@@ -10,8 +10,21 @@
     function subscriptionController(subscriptionService) {
         var vm = this;
 
+        vm.periodsList = [
+            {
+                "name": "codziennie",
+                "value": "1"
+            },
+            {
+                "name": "co tydzień",
+                "value": "7"
+            },
+            {
+                "name": "co miesiąc",
+                "value": "30"
+            }
+        ];
         vm.loadRatesList = loadRatesList;
-        vm.loadPeriodsList = loadPeriodsList;
         vm.subscribe = subscribe;
         vm.clear = clear;
 
@@ -32,26 +45,6 @@
                 vm.errorGettingRates = errorData;
                 vm.errorLoadingRates = true;
                 vm.loadingRates = false;
-            }
-        }
-
-        function loadPeriodsList() {
-            vm.errorLoadingPeriods = false;
-            vm.loadingPeriods = true;
-
-            subscriptionService.getPeriodsList()
-                    .then(getPeriodsListSuccess, getPeriodsListFailure);
-
-            function getPeriodsListSuccess(periodsList) {
-                vm.periodsList = periodsList;
-                vm.errorLoadingPeriods = false;
-                vm.loadingPeriods = false;
-            }
-
-            function getPeriodsListFailure(errorData) {
-                vm.errorGettingPeriods = errorData;
-                vm.errorLoadingPeriods = true;
-                vm.loadingPeriods = false;
             }
         }
 
