@@ -5,13 +5,15 @@
 
             .controller('exchangeRatesController', exchangeRatesController);
 
-    exchangeRatesController.$inject = ['exchangeRatesService', '$timeout'];
+    exchangeRatesController.$inject = ['exchangeRatesService', '$interval', '$scope'];
 
-    function exchangeRatesController(exchangeRatesService, $timeout) {
+    function exchangeRatesController(exchangeRatesService, $interval, $scope) {
         var vm = this;
 
         var condition = false;
-        vm.loadData = loadData;
+        var intervalPromise;
+
+        vm.refreshExchangeRates = refreshExchangeRates;
 
         function getExchangeRates() {
             vm.errorLoadingRates = false;
@@ -35,12 +37,18 @@
             }
         }
 
-        function loadData() {
+        function refreshExchangeRates() {
             getExchangeRates();
-            $timeout(function () {
+            intervalPromise = $interval(function () {
                 condition = !condition;
-                loadData();
-            }, 5000);
+                getExchangeRates();
+            }, 3000);
         }
+
+        $scope.$on('$destroy', function () {
+            if (intervalPromise) {
+                $interval.cancel(intervalPromise);
+            }
+        });
     }
 })();
