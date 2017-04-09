@@ -21,7 +21,7 @@
             <div class="form-group has-feedback" data-ng-init="SC.loadRatesList()">
                 <label class="control-label" for="rates">Subskrybowane waluty:</label>
                 <div>
-                    <multiselect id="rates" name="rates" ms-header="Wybierz" ms-selected="Wybrano..." scroll-after-rows="10" filter-after-rows="5" data-ng-model="SC.contact.rates" options="rate.targetCurrencyCode as rate.targetCurrencyCode + ' -> ' + rate.baseCurrencyCode for rate in SC.ratesList|orderBy:'name'" data-multiple="true" required></multiselect>
+                    <multiselect id="rates" name="rates" ms-header="Wybierz" ms-selected="Wybrano..." scroll-after-rows="10" filter-after-rows="5" data-ng-model="SC.contact.rates" options="rate.targetCurrencyCode as rate.targetCurrencyCode + ' -> ' + rate.baseCurrencyCode + ' (' + rate.targetCurrencyName + ')' for rate in SC.ratesList|orderBy:'name'" data-multiple="true" required></multiselect>
                 </div>
             </div>
             <div class="form-group has-feedback" data-ng-class="ContactForm.period.$valid ? 'has-success' : (ContactForm.period.$pristine ? '' : 'has-error')">
