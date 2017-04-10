@@ -42,7 +42,11 @@
 
             function getRatesNBPSuccess(rateData) {
                 for (var i = 0; i < rateData.data[0].rates.length; i++) {
-                    currencies.push({'targetCurrencyName': rateData.data[0].rates[i].currency, 'targetCurrencyCode': rateData.data[0].rates[i].code, 'baseCurrencyCode': 'ZL'});
+                    currencies.push({
+                        'targetCurrencyName': rateData.data[0].rates[i].currency,
+                        'targetCurrencyCode': rateData.data[0].rates[i].code,
+                        'baseCurrencyCode': 'ZL'
+                    });
                 }
 
                 deferred.resolve(currencies);
@@ -54,7 +58,11 @@
 
                 for (var i = 3; i < afterConversion.Structure.Structures.Codelists.Codelist[1].Code.length; i++) {
                     if (afterConversion.Structure.Structures.Codelists.Codelist[1].Code[i]._id.match(/\d+/g) === null) {
-                        currencies.push({'targetCurrencyName': afterConversion.Structure.Structures.Codelists.Codelist[1].Code[i].Name.__text, 'targetCurrencyCode': afterConversion.Structure.Structures.Codelists.Codelist[1].Code[i]._id, 'baseCurrencyCode': 'EUR'});
+                        currencies.push({
+                            'targetCurrencyName': afterConversion.Structure.Structures.Codelists.Codelist[1].Code[i].Name.__text,
+                            'targetCurrencyCode': afterConversion.Structure.Structures.Codelists.Codelist[1].Code[i]._id,
+                            'baseCurrencyCode': 'EUR'
+                        });
                     }
                 }
 

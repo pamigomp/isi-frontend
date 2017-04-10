@@ -12,16 +12,16 @@
 
         vm.periodsList = [
             {
-                "name": "codziennie",
-                "value": "1"
+                'name': 'codziennie',
+                'value': '1'
             },
             {
-                "name": "co tydzień",
-                "value": "7"
+                'name': 'co tydzień',
+                'value': '7'
             },
             {
-                "name": "co miesiąc",
-                "value": "30"
+                'name': 'co miesiąc',
+                'value': '30'
             }
         ];
         vm.loadRatesList = loadRatesList;
