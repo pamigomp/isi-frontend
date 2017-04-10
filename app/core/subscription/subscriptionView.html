@@ -21,7 +21,7 @@
             <div class="form-group has-feedback" data-ng-class="ContactForm.rates.$valid ? 'has-success' : (ContactForm.rates.$pristine ? '' : 'has-error')" data-ng-init="SC.loadRatesList()">
                 <label class="control-label" for="rates">Subskrybowane waluty:</label>
                 <ui-select id="rates" name="rates" multiple data-ng-model="SC.contact.rates" theme="bootstrap" close-on-select="false" required>
-                    <ui-select-match placeholder="Kliknij, aby wybrać...">{{::$item.targetCurrencyCode}} -> ({{::$item.baseCurrencyCode}})</ui-select-match>
+                    <ui-select-match placeholder="Kliknij, aby wybrać...">{{::$item.targetCurrencyCode}} -> {{::$item.baseCurrencyCode}}</ui-select-match>
                     <ui-select-choices repeat="rate in SC.ratesList | propsFilter: {targetCurrencyCode: $select.search, targetCurrencyName: $select.search, baseCurrencyCode: $select.search}">
                         <div data-ng-bind-html="rate.targetCurrencyCode + ' -> ' + rate.baseCurrencyCode | highlight: $select.search"></div>
                         <small>

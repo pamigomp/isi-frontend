@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app.exrat', ['ngAnimate', 'chart.js', 'app.exchangeRatesService'])
+    angular.module('app.exrat', ['ngAnimate', 'chart.js', 'app.exchangeRatesService', 'ui.select', 'ngSanitize', 'app.filters.props'])
 
             .controller('exchangeRatesController', exchangeRatesController);
 
@@ -13,7 +13,28 @@
         var condition = false;
         var intervalPromise;
 
+        vm.loadRatesList = loadRatesList;
         vm.refreshExchangeRates = refreshExchangeRates;
+
+        function loadRatesList() {
+            vm.errorLoadingRates = false;
+            vm.loadingRates = true;
+
+            exchangeRatesService.getRatesList()
+                    .then(getRatesListSuccess, getRatesListFailure);
+
+            function getRatesListSuccess(ratesList) {
+                vm.ratesList = ratesList;
+                vm.errorLoadingRates = false;
+                vm.loadingRates = false;
+            }
+
+            function getRatesListFailure(errorData) {
+                vm.errorGettingRates = errorData;
+                vm.errorLoadingRates = true;
+                vm.loadingRates = false;
+            }
+        }
 
         function getExchangeRates() {
             vm.errorLoadingRates = false;
@@ -42,7 +63,7 @@
             intervalPromise = $interval(function () {
                 condition = !condition;
                 getExchangeRates();
-            }, 3000);
+            }, 5000);
         }
 
         $scope.$on('$destroy', function () {
