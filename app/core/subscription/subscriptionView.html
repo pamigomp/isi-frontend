@@ -18,11 +18,18 @@
                 <input id="email" name="email" type="email" data-ng-model="SC.contact.email" class="form-control" required />
                 <span class="glyphicon form-control-feedback" data-ng-class="ContactForm.email.$valid ? 'glyphicon-ok' : (ContactForm.email.$pristine ? '' : 'glyphicon-remove')"></span>
             </div>
-            <div class="form-group has-feedback" data-ng-init="SC.loadRatesList()">
+            <div class="form-group has-feedback" data-ng-class="ContactForm.rates.$valid ? 'has-success' : (ContactForm.rates.$pristine ? '' : 'has-error')" data-ng-init="SC.loadRatesList()">
                 <label class="control-label" for="rates">Subskrybowane waluty:</label>
-                <div>
-                    <multiselect id="rates" name="rates" ms-header="Wybierz" ms-selected="Wybrano..." scroll-after-rows="10" filter-after-rows="5" data-ng-model="SC.contact.rates" options="rate.targetCurrencyCode as rate.targetCurrencyCode + ' -> ' + rate.baseCurrencyCode + ' (' + rate.targetCurrencyName + ')' for rate in SC.ratesList|orderBy:'name'" data-multiple="true" required></multiselect>
-                </div>
+                <ui-select id="rates" name="rates" multiple data-ng-model="SC.contact.rates" theme="bootstrap" close-on-select="false" required>
+                    <ui-select-match placeholder="Kliknij, aby wybrać...">{{::$item.targetCurrencyCode}} -> ({{::$item.baseCurrencyCode}})</ui-select-match>
+                    <ui-select-choices repeat="rate in SC.ratesList | propsFilter: {targetCurrencyCode: $select.search, targetCurrencyName: $select.search, baseCurrencyCode: $select.search}">
+                        <div data-ng-bind-html="rate.targetCurrencyCode + ' -> ' + rate.baseCurrencyCode | highlight: $select.search"></div>
+                        <small>
+                            opis: <span data-ng-bind-html="''+rate.targetCurrencyName | highlight: $select.search"></span>
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+                <span class="glyphicon form-control-feedback" data-ng-class="ContactForm.rates.$valid ? 'glyphicon-ok' : (ContactForm.rates.$pristine ? '' : 'glyphicon-remove')"></span>
             </div>
             <div class="form-group has-feedback" data-ng-class="ContactForm.period.$valid ? 'has-success' : (ContactForm.period.$pristine ? '' : 'has-error')">
                 <label class="control-label" for="period">Okres subskrypcji:</label>
@@ -33,7 +40,7 @@
 </div>
 <div class="panel panel-default">
     <div class="panel-body" style="text-align: center;">
-        <button id="subscribe-btn" class="btn btn-success" data-ng-show="!SC.sendingSubscription" data-ng-click="SC.subscribe(SC.contact)" data-ng-disabled="ContactForm.$invalid || !SC.contact.rates">
+        <button id="subscribe-btn" class="btn btn-success" data-ng-show="!SC.sendingSubscription" data-ng-click="SC.subscribe(SC.contact)" data-ng-disabled="ContactForm.$invalid">
             Subskrybuj <span class="glyphicon glyphicon-send"></span></button>
         <button id="clear-btn" class="btn btn-danger" data-ng-show="!SC.sendingSubscription" data-ng-click="SC.clear()">
             Wyczyść <span class="glyphicon glyphicon-remove"></span></button>

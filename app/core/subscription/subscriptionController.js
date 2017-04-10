@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app.subscription', ['app.subscriptionService'])
+    angular.module('app.subscription', ['app.subscriptionService', 'ui.select', 'ngSanitize', 'app.filters.props'])
 
             .controller('subscriptionController', subscriptionController);
 

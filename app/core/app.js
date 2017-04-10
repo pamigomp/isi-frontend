@@ -9,7 +9,6 @@
         'app.nav.menu',
         'app.exrat',
         'app.subscription',
-        'app.directives.about',
-        'ui.multiselect'
+        'app.directives.about'
     ]);
 })();
