@@ -41,7 +41,7 @@
         function getRatesNBP() {
             return $http({
                 method: 'GET',
-                url: 'http://api.nbp.pl/api/exchangerates/tables/a/'
+                url: 'https://api.nbp.pl/api/exchangerates/tables/a/'
             });
         }
 
