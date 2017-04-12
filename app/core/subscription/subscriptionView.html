@@ -4,8 +4,8 @@
 <div class="alert alert-danger" role="alert" data-ng-show="SC.errorSendingSubscription">
     <strong>Błąd!</strong> Wystąpił problem podczas wysyłania subskrypcji. <strong data-ng-if='SC.errorSubscribing.message'>{{'(Przyczyna: ' + SC.errorSubscribing.message + ')'}}</strong>
 </div>
-<div class="alert alert-danger" role="alert" data-ng-show="SC.errorLoadingRates">
-    <strong>Błąd!</strong> Wystąpił problem podczas pobierania listy walut. <strong data-ng-if='SC.errorGettingPeriods.message'>{{'(Przyczyna: ' + SC.errorGettingPeriods.message + ')'}}</strong>
+<div class="alert alert-danger" role="alert" data-ng-show="SC.errorLoadingCurrencies">
+    <strong>Błąd!</strong> Wystąpił problem podczas pobierania listy walut. <strong data-ng-if='SC.errorGettingCurrencies.message'>{{'(Przyczyna: ' + SC.errorGettingCurrencies.message + ')'}}</strong>
 </div>
 <div class="panel panel-primary">
     <div class="panel-heading">
@@ -18,18 +18,18 @@
                 <input id="email" name="email" type="email" data-ng-model="SC.contact.email" class="form-control" required />
                 <span class="glyphicon form-control-feedback" data-ng-class="ContactForm.email.$valid ? 'glyphicon-ok' : (ContactForm.email.$pristine ? '' : 'glyphicon-remove')"></span>
             </div>
-            <div class="form-group has-feedback" data-ng-class="ContactForm.rates.$valid ? 'has-success' : (ContactForm.rates.$pristine ? '' : 'has-error')" data-ng-init="SC.loadRatesList()">
-                <label class="control-label" for="rates">Subskrybowane waluty:</label>
-                <ui-select id="rates" name="rates" multiple data-ng-model="SC.contact.rates" theme="bootstrap" close-on-select="false" required>
+            <div class="form-group has-feedback" data-ng-class="ContactForm.currencies.$valid ? 'has-success' : (ContactForm.currencies.$pristine ? '' : 'has-error')" data-ng-init="SC.loadCurrenciesList()">
+                <label class="control-label" for="currencies">Subskrybowane waluty:</label>
+                <ui-select id="currencies" name="currencies" multiple data-ng-model="SC.contact.currencies" theme="bootstrap" close-on-select="false" required>
                     <ui-select-match placeholder="Kliknij, aby wybrać...">{{::$item.targetCurrencyCode}} -> {{::$item.baseCurrencyCode}}</ui-select-match>
-                    <ui-select-choices repeat="rate in SC.ratesList | propsFilter: {targetCurrencyCode: $select.search, targetCurrencyName: $select.search, baseCurrencyCode: $select.search}">
-                        <div data-ng-bind-html="rate.targetCurrencyCode + ' -> ' + rate.baseCurrencyCode | highlight: $select.search"></div>
+                    <ui-select-choices repeat="currency in SC.currenciesList | propsFilter: {targetCurrencyCode: $select.search, targetCurrencyName: $select.search, baseCurrencyCode: $select.search}">
+                        <div data-ng-bind-html="currency.targetCurrencyCode + ' -> ' + currency.baseCurrencyCode | highlight: $select.search"></div>
                         <small>
-                            opis: <span data-ng-bind-html="''+rate.targetCurrencyName | highlight: $select.search"></span>
+                            opis: <span data-ng-bind-html="''+currency.targetCurrencyName | highlight: $select.search"></span>
                         </small>
                     </ui-select-choices>
                 </ui-select>
-                <span class="glyphicon form-control-feedback" data-ng-class="ContactForm.rates.$valid ? 'glyphicon-ok' : (ContactForm.rates.$pristine ? '' : 'glyphicon-remove')"></span>
+                <span class="glyphicon form-control-feedback" data-ng-class="ContactForm.currencies.$valid ? 'glyphicon-ok' : (ContactForm.currencies.$pristine ? '' : 'glyphicon-remove')"></span>
             </div>
             <div class="form-group has-feedback" data-ng-class="ContactForm.period.$valid ? 'has-success' : (ContactForm.period.$pristine ? '' : 'has-error')">
                 <label class="control-label" for="period">Okres subskrypcji:</label>

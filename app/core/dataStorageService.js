@@ -10,8 +10,8 @@
         return {
             getExchangeRates: getExchangeRates,
             postSubscription: postSubscription,
-            getRatesNBP: getRatesNBP,
-            getRatesECB: getRatesECB
+            getCurrenciesNBP: getCurrenciesNBP,
+            getCurrenciesECB: getCurrenciesECB
         };
 
         function getExchangeRates(condition) {
@@ -38,14 +38,14 @@
             });
         }
 
-        function getRatesNBP() {
+        function getCurrenciesNBP() {
             return $http({
                 method: 'GET',
                 url: 'https://api.nbp.pl/api/exchangerates/tables/a/'
             });
         }
 
-        function getRatesECB() {
+        function getCurrenciesECB() {
             return $http({
                 method: 'GET',
                 url: 'https://sdw-wsrest.ecb.europa.eu/service/datastructure/ECB/ECB_EXR1/1.0?references=children'

@@ -10,7 +10,7 @@
     function subscriptionService(dataStorageService, $q) {
         return {
             postSubscription: postSubscription,
-            getRatesList: getRatesList
+            getCurrenciesList: getCurrenciesList
         };
 
         function postSubscription(subscription) {
@@ -30,31 +30,31 @@
             return deferred.promise;
         }
 
-        function getRatesList() {
+        function getCurrenciesList() {
             var deferred = $q.defer();
             var currencies = [];
 
-            dataStorageService.getRatesNBP()
-                    .then(getRatesNBPSuccess, getRatesFailure);
+            dataStorageService.getCurrenciesNBP()
+                    .then(getCurrenciesNBPSuccess, getCurrenciesFailure);
 
-            dataStorageService.getRatesECB()
-                    .then(getRatesECBSuccess, getRatesFailure);
+            dataStorageService.getCurrenciesECB()
+                    .then(getCurrenciesECBSuccess, getCurrenciesFailure);
 
-            function getRatesNBPSuccess(rateData) {
-                for (var i = 0; i < rateData.data[0].rates.length; i++) {
+            function getCurrenciesNBPSuccess(currencyData) {
+                for (var i = 0; i < currencyData.data[0].rates.length; i++) {
                     currencies.push({
-                        'targetCurrencyName': rateData.data[0].rates[i].currency,
-                        'targetCurrencyCode': rateData.data[0].rates[i].code,
-                        'baseCurrencyCode': 'ZL'
+                        'targetCurrencyName': currencyData.data[0].rates[i].currency,
+                        'targetCurrencyCode': currencyData.data[0].rates[i].code,
+                        'baseCurrencyCode': 'PLN'
                     });
                 }
 
                 deferred.resolve(currencies);
             }
 
-            function getRatesECBSuccess(rateData) {
+            function getCurrenciesECBSuccess(currencyData) {
                 var xml2json = new X2JS();
-                var afterConversion = xml2json.xml_str2json(rateData.data);
+                var afterConversion = xml2json.xml_str2json(currencyData.data);
 
                 for (var i = 3; i < afterConversion.Structure.Structures.Codelists.Codelist[1].Code.length; i++) {
                     if (afterConversion.Structure.Structures.Codelists.Codelist[1].Code[i]._id.match(/\d+/g) === null) {
@@ -69,7 +69,7 @@
                 deferred.resolve(currencies);
             }
 
-            function getRatesFailure() {
+            function getCurrenciesFailure() {
                 deferred.reject();
             }
 

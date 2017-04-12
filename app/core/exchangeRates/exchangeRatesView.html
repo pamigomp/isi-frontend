@@ -1,20 +1,26 @@
+<div class="alert alert-danger" role="alert" data-ng-show="ERC.errorLoadingCurrencies">
+    <strong>Błąd!</strong> Wystąpił problem podczas pobierania listy walut. <strong data-ng-if='ERC.errorGettingCurrencies.message'>{{'(Przyczyna: ' + ERC.errorGettingCurrencies.message + ')'}}</strong>
+</div>
+<div class="alert alert-danger" role="alert" data-ng-show="ERC.errorLoadingExchangeRates">
+    <strong>Błąd!</strong> Wystąpił problem podczas generowania wykresu. <strong data-ng-if='ERC.errorGettingExchangeRates.message'>{{'(Przyczyna: ' + ERC.errorGettingExchangeRates.message + ')'}}</strong>
+</div>
 <div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title">Wykres kursów walut - LIVE!</h3>
     </div>
     <div class="panel-body">
-        <div class="form-group" data-ng-init="ERC.loadRatesList()">
-            <label class="control-label" for="rates">Waluty do wyświetlenia na wykresie (max 3):</label>
-            <ui-select id="rates" name="rates" multiple data-ng-model="ERC.selectedRates" theme="bootstrap" close-on-select="false" limit='3' required>
+        <div class="form-group" data-ng-init="ERC.loadCurrenciesList()">
+            <label class="control-label" for="currencies">Waluty do wyświetlenia na wykresie (max 3):</label>
+            <ui-select id="currencies" name="currencies" multiple data-ng-model="ERC.selectedCurrencies" theme="bootstrap" close-on-select="true" limit='3' required>
                 <ui-select-match placeholder="Kliknij, aby wybrać...">{{::$item.targetCurrencyCode}} -> {{::$item.baseCurrencyCode}}</ui-select-match>
-                <ui-select-choices repeat="rate in ERC.ratesList | propsFilter: {targetCurrencyCode: $select.search, targetCurrencyName: $select.search, baseCurrencyCode: $select.search}">
-                    <div data-ng-bind-html="rate.targetCurrencyCode + ' -> ' + rate.baseCurrencyCode | highlight: $select.search"></div>
+                <ui-select-choices repeat="currency in ERC.currenciesList | propsFilter: {targetCurrencyCode: $select.search, targetCurrencyName: $select.search, baseCurrencyCode: $select.search}">
+                    <div data-ng-bind-html="currency.targetCurrencyCode + ' -> ' + currency.baseCurrencyCode | highlight: $select.search"></div>
                     <small>
-                        opis: <span data-ng-bind-html="''+rate.targetCurrencyName | highlight: $select.search"></span>
+                        opis: <span data-ng-bind-html="''+currency.targetCurrencyName | highlight: $select.search"></span>
                     </small>
                 </ui-select-choices>
             </ui-select>       
         </div>
-        <canvas class="chart chart-line" chart-data="ERC.data" chart-labels="ERC.labels" chart-series="ERC.series" data-ng-init="ERC.refreshExchangeRates()"></canvas>
+        <div fusioncharts width="100%" height="100%" type="msline" chart="{{ERC.attrs}}" categories="{{ERC.categories}}" dataset="{{ERC.dataset}}" data-ng-init="ERC.refreshExchangeRates()"></div>
     </div>
 </div>

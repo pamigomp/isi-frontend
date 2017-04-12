@@ -24,27 +24,27 @@
                 'value': '30'
             }
         ];
-        vm.loadRatesList = loadRatesList;
+        vm.loadCurrenciesList = loadCurrenciesList;
         vm.subscribe = subscribe;
         vm.clear = clear;
 
-        function loadRatesList() {
-            vm.errorLoadingRates = false;
-            vm.loadingRates = true;
+        function loadCurrenciesList() {
+            vm.errorLoadingCurrencies = false;
+            vm.loadingCurrencies = true;
 
-            subscriptionService.getRatesList()
-                    .then(getRatesListSuccess, getRatesListFailure);
+            subscriptionService.getCurrenciesList()
+                    .then(getCurrenciesListSuccess, getCurrenciesListFailure);
 
-            function getRatesListSuccess(ratesList) {
-                vm.ratesList = ratesList;
-                vm.errorLoadingRates = false;
-                vm.loadingRates = false;
+            function getCurrenciesListSuccess(currenciesList) {
+                vm.currenciesList = currenciesList;
+                vm.errorLoadingCurrencies = false;
+                vm.loadingCurrencies = false;
             }
 
-            function getRatesListFailure(errorData) {
-                vm.errorGettingRates = errorData;
-                vm.errorLoadingRates = true;
-                vm.loadingRates = false;
+            function getCurrenciesListFailure(errorData) {
+                vm.errorGettingCurrencies = errorData;
+                vm.errorLoadingCurrencies = true;
+                vm.loadingCurrencies = false;
             }
         }
 

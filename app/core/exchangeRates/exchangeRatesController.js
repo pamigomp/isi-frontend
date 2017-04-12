@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app.exrat', ['ngAnimate', 'chart.js', 'app.exchangeRatesService', 'ui.select', 'ngSanitize', 'app.filters.props'])
+    angular.module('app.exrat', ['app.exchangeRatesService', 'ui.select', 'ngSanitize', 'app.filters.props', 'ng-fusioncharts'])
 
             .controller('exchangeRatesController', exchangeRatesController);
 
@@ -12,50 +12,101 @@
 
         var condition = false;
         var intervalPromise;
+        var allExchangeRates;
 
-        vm.loadRatesList = loadRatesList;
+        vm.selectedCurrencies = [
+            {
+                baseCurrencyCode: 'PLN',
+                targetCurrencyCode: 'EUR',
+                targetCurrencyName: 'euro'
+            }
+        ];
+        vm.categories = [];
+        vm.dataset = [];
+        vm.loadCurrenciesList = loadCurrenciesList;
         vm.refreshExchangeRates = refreshExchangeRates;
 
-        function loadRatesList() {
-            vm.errorLoadingRates = false;
-            vm.loadingRates = true;
+        function loadCurrenciesList() {
+            vm.errorLoadingCurrencies = false;
+            vm.loadingCurrencies = true;
 
-            exchangeRatesService.getRatesList()
-                    .then(getRatesListSuccess, getRatesListFailure);
+            exchangeRatesService.getCurrenciesList()
+                    .then(getCurrenciesListSuccess, getCurrenciesListFailure);
 
-            function getRatesListSuccess(ratesList) {
-                vm.ratesList = ratesList;
-                vm.errorLoadingRates = false;
-                vm.loadingRates = false;
+            function getCurrenciesListSuccess(currenciesList) {
+                vm.currenciesList = currenciesList;
+                vm.errorLoadingCurrencies = false;
+                vm.loadingCurrencies = false;
             }
 
-            function getRatesListFailure(errorData) {
-                vm.errorGettingRates = errorData;
-                vm.errorLoadingRates = true;
-                vm.loadingRates = false;
+            function getCurrenciesListFailure(errorData) {
+                vm.errorGettingCurrencies = errorData;
+                vm.errorLoadingCurrencies = true;
+                vm.loadingCurrencies = false;
             }
         }
 
         function getExchangeRates() {
-            vm.errorLoadingRates = false;
-            vm.loadingRates = true;
+            vm.errorLoadingExchangeRates = false;
+            vm.loadingExchangeRates = true;
 
             exchangeRatesService.getExchangeRates(condition)
                     .then(getExchangeRatesSuccess, getExchangeRatesFailure);
 
             function getExchangeRatesSuccess(exchangeRates) {
-                vm.labels = exchangeRates[0].days;
-                vm.series = exchangeRates[0].series;
-                vm.data = exchangeRates[0].values;
-                vm.errorLoadingRates = false;
-                vm.loadingRates = false;
+                allExchangeRates = exchangeRates;
+                generateChart();
+                vm.errorLoadingExchangeRates = false;
+                vm.loadingExchangeRates = false;
             }
 
             function getExchangeRatesFailure(errorData) {
-                vm.errorGettingRates = errorData;
-                vm.errorLoadingRates = true;
-                vm.loadingRates = false;
+                vm.errorGettingExchangeRates = errorData;
+                vm.errorLoadingExchangeRates = true;
+                vm.loadingExchangeRates = false;
             }
+        }
+
+        function generateChart() {
+            var category2 = [];
+            clearChart();
+
+            angular.forEach(vm.selectedCurrencies, function (selectedRate) {
+                angular.forEach(allExchangeRates, function (exchangeRate) {
+                    if (selectedRate.targetCurrencyCode === exchangeRate.targetCurrencyCode && selectedRate.baseCurrencyCode === exchangeRate.baseCurrencyCode) {
+                        var seriesname = exchangeRate.targetCurrencyCode + ' -> ' + exchangeRate.baseCurrencyCode;
+                        var found2 = vm.dataset.some(function (data) {
+                            return data.seriesname === seriesname;
+                        });
+                        if (!found2) {
+                            vm.dataset.push({
+                                'seriesname': seriesname,
+                                'data': exchangeRate.currencyData
+                            });
+                        }
+                        angular.forEach(exchangeRate.currencyData, function (currencyData) {
+                            var found = category2.some(function (category) {
+                                return category.label === currencyData.effectiveDate;
+                            });
+                            if (!found) {
+                                category2.push({
+                                    'label': currencyData.effectiveDate
+                                });
+                            }
+                        });
+                    }
+                }
+                );
+            });
+
+            vm.categories.push({
+                'category': category2
+            });
+        }
+
+        function clearChart() {
+            vm.dataset.splice(0, vm.dataset.length);
+            vm.categories.splice(0, vm.categories.length);
         }
 
         function refreshExchangeRates() {
@@ -71,5 +122,31 @@
                 $interval.cancel(intervalPromise);
             }
         });
+
+        $scope.$watch('ERC.selectedRates', function () {
+            generateChart();
+        });
+
+//        vm.attrs = {
+//            'caption': 'Sales - 2012 v 2013',
+//            'numberprefix': '$',
+//            'plotgradientcolor': '',
+//            'bgcolor': 'FFFFFF',
+//            'showalternatehgridcolor': '0',
+//            'divlinecolor': 'CCCCCC',
+//            'showvalues': '0',
+//            'showcanvasborder': '0',
+//            'canvasborderalpha': '0',
+//            'canvasbordercolor': 'CCCCCC',
+//            'canvasborderthickness': '1',
+//            'yaxismaxvalue': '30000',
+//            'captionpadding': '30',
+//            'linethickness': '3',
+//            'yaxisvaluespadding': '15',
+//            'legendshadow': '0',
+//            'legendborderalpha': '0',
+//            'palettecolors': '#f8bd19,#008ee4,#33bdda,#e44a00,#6baa01,#583e78',
+//            'showborder': '0'
+//        };
     }
 })();
