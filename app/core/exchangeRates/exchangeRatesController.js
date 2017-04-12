@@ -19,12 +19,30 @@
                 baseCurrencyCode: 'PLN',
                 targetCurrencyCode: 'EUR',
                 targetCurrencyName: 'euro'
+            },
+            {
+                baseCurrencyCode: 'PLN',
+                targetCurrencyCode: 'USD',
+                targetCurrencyName: 'dolar amerykański'
             }
         ];
+        vm.attrs = {
+            'caption': 'Wykres aktualnych kursów walut',
+            'bgcolor': '#e7e7e7',
+            'showalternatehgridcolor': '0',
+            'divlinecolor': 'CCCCCC',
+            'vDivLineColor': 'CCCCCC',
+            'showvalues': '1',
+            'vline': true,
+            'yaxisvaluespadding': '15',
+            'numVDivLines': 5,
+            'vDivLineDashed': '0'
+        };
         vm.categories = [];
         vm.dataset = [];
         vm.loadCurrenciesList = loadCurrenciesList;
         vm.refreshExchangeRates = refreshExchangeRates;
+        vm.getExchangeRates = getExchangeRates;
 
         function loadCurrenciesList() {
             vm.errorLoadingCurrencies = false;
@@ -47,6 +65,7 @@
         }
 
         function getExchangeRates() {
+            condition = !condition;
             vm.errorLoadingExchangeRates = false;
             vm.loadingExchangeRates = true;
 
@@ -112,9 +131,8 @@
         function refreshExchangeRates() {
             getExchangeRates();
             intervalPromise = $interval(function () {
-                condition = !condition;
                 getExchangeRates();
-            }, 5000);
+            }, 10000);
         }
 
         $scope.$on('$destroy', function () {
@@ -123,30 +141,8 @@
             }
         });
 
-        $scope.$watch('ERC.selectedRates', function () {
+        $scope.$watch('ERC.selectedCurrencies', function () {
             generateChart();
         });
-
-//        vm.attrs = {
-//            'caption': 'Sales - 2012 v 2013',
-//            'numberprefix': '$',
-//            'plotgradientcolor': '',
-//            'bgcolor': 'FFFFFF',
-//            'showalternatehgridcolor': '0',
-//            'divlinecolor': 'CCCCCC',
-//            'showvalues': '0',
-//            'showcanvasborder': '0',
-//            'canvasborderalpha': '0',
-//            'canvasbordercolor': 'CCCCCC',
-//            'canvasborderthickness': '1',
-//            'yaxismaxvalue': '30000',
-//            'captionpadding': '30',
-//            'linethickness': '3',
-//            'yaxisvaluespadding': '15',
-//            'legendshadow': '0',
-//            'legendborderalpha': '0',
-//            'palettecolors': '#f8bd19,#008ee4,#33bdda,#e44a00,#6baa01,#583e78',
-//            'showborder': '0'
-//        };
     }
 })();

@@ -43,3 +43,9 @@ img {
     width: 100%;
     height: auto;
 }
+
+.refresh-btn {
+    float:right;
+    color: white;
+    font-style: italic;
+}
