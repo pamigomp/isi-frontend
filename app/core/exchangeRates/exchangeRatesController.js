@@ -26,6 +26,7 @@
                 targetCurrencyName: 'dolar amerykański'
             }
         ];
+        vm.selectedPeriod = "1";
         vm.attrs = {
             'caption': 'Wykres aktualnych kursów walut',
             'bgcolor': '#e7e7e7',
@@ -38,8 +39,8 @@
             'numVDivLines': 5,
             'vDivLineDashed': '0'
         };
-        vm.categories = [];
-        vm.dataset = [];
+        vm.categories = [{'category': []}];
+        vm.dataset = [{}];
         vm.loadCurrenciesList = loadCurrenciesList;
         vm.refreshExchangeRates = refreshExchangeRates;
         vm.getExchangeRates = getExchangeRates;
@@ -87,28 +88,46 @@
         }
 
         function generateChart() {
-            var category2 = [];
             clearChart();
+
+            if (vm.selectedCurrencies.length !== 0) {
+                selectCurrencies();
+
+                selectPeriod();
+            }
+        }
+
+        function clearChart() {
+            vm.dataset.splice(0, vm.dataset.length);
+            vm.categories.splice(0, vm.categories.length);
+            if (vm.selectedCurrencies.length === 0) {
+                vm.dataset = [{}];
+                vm.categories = [{'category': []}];
+            }
+        }
+
+        function selectCurrencies() {
+            var categoryTemp = [];
 
             angular.forEach(vm.selectedCurrencies, function (selectedRate) {
                 angular.forEach(allExchangeRates, function (exchangeRate) {
                     if (selectedRate.targetCurrencyCode === exchangeRate.targetCurrencyCode && selectedRate.baseCurrencyCode === exchangeRate.baseCurrencyCode) {
                         var seriesname = exchangeRate.targetCurrencyCode + ' -> ' + exchangeRate.baseCurrencyCode;
-                        var found2 = vm.dataset.some(function (data) {
+                        var foundData = vm.dataset.some(function (data) {
                             return data.seriesname === seriesname;
                         });
-                        if (!found2) {
-                            vm.dataset.push({
-                                'seriesname': seriesname,
-                                'data': exchangeRate.currencyData
+                        if (!foundData) {
+                            var index = vm.dataset.push({
+                                'seriesname': seriesname
                             });
+                            vm.dataset[index - 1].data = angular.copy(exchangeRate.currencyData);
                         }
                         angular.forEach(exchangeRate.currencyData, function (currencyData) {
-                            var found = category2.some(function (category) {
+                            var foundCategory = categoryTemp.some(function (category) {
                                 return category.label === currencyData.effectiveDate;
                             });
-                            if (!found) {
-                                category2.push({
+                            if (!foundCategory) {
+                                categoryTemp.push({
                                     'label': currencyData.effectiveDate
                                 });
                             }
@@ -119,13 +138,47 @@
             });
 
             vm.categories.push({
-                'category': category2
+                'category': categoryTemp
             });
         }
 
-        function clearChart() {
-            vm.dataset.splice(0, vm.dataset.length);
-            vm.categories.splice(0, vm.categories.length);
+        function selectPeriod() {
+            if (vm.selectedPeriod === "1") {
+                angular.forEach(vm.dataset, function (data) {
+                    while (data.data.length - 2 > 0) {
+                        data.data.splice(0, data.data.length - 2);
+                    }
+                });
+                angular.forEach(vm.categories, function (category) {
+                    while (category.category.length - 2 > 0) {
+                        category.category.splice(0, category.category.length - 2);
+                    }
+                });
+            }
+            if (vm.selectedPeriod === "7") {
+                angular.forEach(vm.dataset, function (data) {
+                    while (data.data.length - 5 > 0) {
+                        data.data.splice(0, data.data.length - 5);
+                    }
+                });
+                angular.forEach(vm.categories, function (category) {
+                    while (category.category.length - 5 > 0) {
+                        category.category.splice(0, category.category.length - 5);
+                    }
+                });
+            }
+            if (vm.selectedPeriod === "30") {
+                angular.forEach(vm.dataset, function (data) {
+                    while (data.data.length - 7 > 0) {
+                        data.data.splice(0, data.data.length - 7);
+                    }
+                });
+                angular.forEach(vm.categories, function (category) {
+                    while (category.category.length - 7 > 0) {
+                        category.category.splice(0, category.category.length - 7);
+                    }
+                });
+            }
         }
 
         function refreshExchangeRates() {
@@ -141,8 +194,16 @@
             }
         });
 
-        $scope.$watch('ERC.selectedCurrencies', function () {
-            generateChart();
+        $scope.$watch('ERC.selectedCurrencies', function (newValue, oldValue) {
+            if (newValue !== oldValue) {
+                generateChart();
+            }
+        });
+
+        $scope.$watch('ERC.selectedPeriod', function (newValue, oldValue) {
+            if (newValue !== oldValue) {
+                generateChart();
+            }
         });
     }
 })();
