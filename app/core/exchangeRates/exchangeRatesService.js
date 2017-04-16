@@ -13,10 +13,10 @@
             getCurrenciesList: getCurrenciesList
         };
 
-        function getExchangeRates(condition) {
+        function getExchangeRates() {
             var deferred = $q.defer();
 
-            dataStorageService.getExchangeRates(condition)
+            dataStorageService.getExchangeRates()
                     .then(getSuccess, getFailure);
 
             function getSuccess(exchangeRates) {

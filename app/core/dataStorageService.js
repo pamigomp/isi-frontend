@@ -14,20 +14,11 @@
             getCurrenciesECB: getCurrenciesECB
         };
 
-        function getExchangeRates(condition) {
-            if (condition) {
-                return $http({
-                    method: 'GET',
-//                url: 'http://localhost:8080/isi/exchangeRates'
-                    url: 'assets/data/exchangeRates.json'
-                });
-            } else {
-                return $http({
-                    method: 'GET',
-//                url: 'http://localhost:8080/isi/exchangeRates'
-                    url: 'assets/data/exchangeRates2.json'
-                });
-            }
+        function getExchangeRates() {
+            return $http({
+                method: 'GET',
+                url: 'http://localhost:8080/isi/exchangeRates'
+            });
         }
 
         function postSubscription(subscription) {

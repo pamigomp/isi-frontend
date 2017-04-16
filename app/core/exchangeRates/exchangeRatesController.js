@@ -10,7 +10,6 @@
     function exchangeRatesController(exchangeRatesService, $interval, $scope) {
         var vm = this;
 
-        var condition = false;
         var intervalPromise;
         var allExchangeRates;
 
@@ -66,11 +65,10 @@
         }
 
         function getExchangeRates() {
-            condition = !condition;
             vm.errorLoadingExchangeRates = false;
             vm.loadingExchangeRates = true;
 
-            exchangeRatesService.getExchangeRates(condition)
+            exchangeRatesService.getExchangeRates()
                     .then(getExchangeRatesSuccess, getExchangeRatesFailure);
 
             function getExchangeRatesSuccess(exchangeRates) {
@@ -145,37 +143,37 @@
         function selectPeriod() {
             if (vm.selectedPeriod === "1") {
                 angular.forEach(vm.dataset, function (data) {
-                    while (data.data.length - 2 > 0) {
-                        data.data.splice(0, data.data.length - 2);
+                    while (data.data.length - 24 > 0) {
+                        data.data.splice(0, data.data.length - 24);
                     }
                 });
                 angular.forEach(vm.categories, function (category) {
-                    while (category.category.length - 2 > 0) {
-                        category.category.splice(0, category.category.length - 2);
+                    while (category.category.length - 24 > 0) {
+                        category.category.splice(0, category.category.length - 24);
                     }
                 });
             }
             if (vm.selectedPeriod === "7") {
                 angular.forEach(vm.dataset, function (data) {
-                    while (data.data.length - 5 > 0) {
-                        data.data.splice(0, data.data.length - 5);
+                    while (data.data.length - 168 > 0) {
+                        data.data.splice(0, data.data.length - 168);
                     }
                 });
                 angular.forEach(vm.categories, function (category) {
-                    while (category.category.length - 5 > 0) {
-                        category.category.splice(0, category.category.length - 5);
+                    while (category.category.length - 168 > 0) {
+                        category.category.splice(0, category.category.length - 168);
                     }
                 });
             }
             if (vm.selectedPeriod === "30") {
                 angular.forEach(vm.dataset, function (data) {
-                    while (data.data.length - 7 > 0) {
-                        data.data.splice(0, data.data.length - 7);
+                    while (data.data.length - 720 > 0) {
+                        data.data.splice(0, data.data.length - 720);
                     }
                 });
                 angular.forEach(vm.categories, function (category) {
-                    while (category.category.length - 7 > 0) {
-                        category.category.splice(0, category.category.length - 7);
+                    while (category.category.length - 720 > 0) {
+                        category.category.splice(0, category.category.length - 720);
                     }
                 });
             }
@@ -185,7 +183,7 @@
             getExchangeRates();
             intervalPromise = $interval(function () {
                 getExchangeRates();
-            }, 10000);
+            }, 360000);
         }
 
         $scope.$on('$destroy', function () {
