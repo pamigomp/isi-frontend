@@ -8,23 +8,31 @@
 
     function dataStorageService($http) {
         return {
-            getExchangeRates: getExchangeRates,
+            getExchangeRatesNBP: getExchangeRatesNBP,
+            getExchangeRatesECB: getExchangeRatesECB,
             postSubscription: postSubscription,
             getCurrenciesNBP: getCurrenciesNBP,
             getCurrenciesECB: getCurrenciesECB
         };
 
-        function getExchangeRates() {
+        function getExchangeRatesNBP(currency, startDate, endDate) {
             return $http({
                 method: 'GET',
-                url: 'http://localhost:8080/isi/exchangeRates'
+                url: 'https://isi-backend.herokuapp.com/api/exchange/v1/nbp/exchange_rates?currency=' + currency + '&startDate=' + startDate + '&endDate=' + endDate
+            });
+        }
+
+        function getExchangeRatesECB(currency, startDate, endDate) {
+            return $http({
+                method: 'GET',
+                url: 'https://isi-backend.herokuapp.com/api/exchange/v1/ecb/exchange_rates?currency=' + currency + '&startDate=' + startDate + '&endDate=' + endDate
             });
         }
 
         function postSubscription(subscription) {
             return $http({
                 method: 'POST',
-                url: 'http://localhost:8080/isi/exchangeRates',
+                url: 'https://isi-backend.herokuapp.com/api/exchange/v1/subscribe',
                 data: subscription
             });
         }

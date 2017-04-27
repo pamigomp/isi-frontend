@@ -24,7 +24,7 @@
             }
 
             function postFailure(error) {
-                deferred.reject(error.data);
+                deferred.reject(error);
             }
 
             return deferred.promise;
@@ -69,8 +69,8 @@
                 deferred.resolve(currencies);
             }
 
-            function getCurrenciesFailure() {
-                deferred.reject();
+            function getCurrenciesFailure(error) {
+                deferred.reject(error);
             }
 
             return deferred.promise;

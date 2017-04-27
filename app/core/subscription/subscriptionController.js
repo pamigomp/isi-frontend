@@ -13,15 +13,15 @@
         vm.periodsList = [
             {
                 'name': 'codziennie',
-                'value': '1'
+                'value': 'DAILY'
             },
             {
                 'name': 'co tydzień',
-                'value': '7'
+                'value': 'WEEKLY'
             },
             {
                 'name': 'co miesiąc',
-                'value': '30'
+                'value': 'MONTHLY'
             }
         ];
         vm.loadCurrenciesList = loadCurrenciesList;
