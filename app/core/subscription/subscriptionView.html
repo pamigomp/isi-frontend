@@ -1,5 +1,5 @@
 <div class="alert alert-success" role="alert" data-ng-show="SC.subscribed">
-    <strong>Sukces!</strong> Pozytywnie zasubskrybowano e-mail <strong>{{SC.contact.email}}</strong>
+    <strong>Sukces!</strong> Pozytywnie zasubskrybowano e-mail <strong>{{SC.subscribedEmail}}</strong>
 </div>
 <div class="alert alert-danger" role="alert" data-ng-show="SC.errorSendingSubscription">
     <strong>Błąd!</strong> Wystąpił problem podczas wysyłania subskrypcji. <strong data-ng-if='SC.errorSubscribing.message'>{{'(Przyczyna: ' + SC.errorSubscribing.message + ')'}}</strong>

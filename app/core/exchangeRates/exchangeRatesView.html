@@ -6,7 +6,7 @@
 </div>
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h3 class="panel-title">Wykres kursów walut - LIVE!<a class="refresh-btn" data-ng-click="ERC.getExchangeRates()">Odśwież wykres</a></h3>
+        <h3 class="panel-title">Wykres kursów walut - LIVE!<a class="refresh-btn" data-ng-click="ERC.getExchangeRates('base')">Odśwież wykres</a></h3>
     </div>
     <div class="panel-body">
         <div class="form-group" data-ng-init="ERC.loadCurrenciesList()">
@@ -34,6 +34,11 @@
                     <input name="period" value="MONTHLY" data-ng-model="ERC.selectedPeriod" type="radio">Miesiąc
                 </label>
             </div>
+        </div>
+        <div class="form-group" align="center">
+            <button class="btn" style="width: 110px;" data-ng-click="ERC.getExchangeRates('prev')"><i class="glyphicon glyphicon-arrow-left"></i> Wcześniej</button>
+            <span>-</span>
+            <button class="btn" style="width: 110px;" data-ng-disabled="ERC.endDate >= ERC.today" data-ng-click="ERC.getExchangeRates('next')">Później <i class="glyphicon glyphicon-arrow-right"></i></button>
         </div>
         <div fusioncharts width="100%" height="400" type="msline" chart="{{ERC.attrs}}" categories="{{ERC.categories}}" dataset="{{ERC.dataset}}" data-ng-init="ERC.refreshExchangeRates()"></div>
     </div>

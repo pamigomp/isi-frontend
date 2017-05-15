@@ -57,6 +57,7 @@
                     .then(postSubscriptionSuccess, postSubscriptionFailure);
 
             function postSubscriptionSuccess() {
+                vm.subscribedEmail = vm.contact.email;
                 vm.subscribed = true;
                 vm.errorSendingSubscription = false;
                 vm.sendingSubscription = false;

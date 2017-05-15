@@ -15,17 +15,27 @@
             getCurrenciesECB: getCurrenciesECB
         };
 
-        function getExchangeRatesNBP(currency, startDate, endDate) {
+        function getExchangeRatesNBP(currency, startDate, endDate, page, size) {
             return $http({
                 method: 'GET',
-                url: 'https://isi-backend.herokuapp.com/api/exchange/v1/nbp/exchange_rates?currency=' + currency + '&startDate=' + startDate + '&endDate=' + endDate
+                url: 'https://isi-backend.herokuapp.com/api/exchange/v1/nbp/exchange_rates?' +
+                        'currency=' + currency +
+                        '&startDate=' + startDate +
+                        '&endDate=' + endDate +
+                        '&page=' + page +
+                        '&size=' + size
             });
         }
 
-        function getExchangeRatesECB(currency, startDate, endDate) {
+        function getExchangeRatesECB(currency, startDate, endDate, page, size) {
             return $http({
                 method: 'GET',
-                url: 'https://isi-backend.herokuapp.com/api/exchange/v1/ecb/exchange_rates?currency=' + currency + '&startDate=' + startDate + '&endDate=' + endDate
+                url: 'https://isi-backend.herokuapp.com/api/exchange/v1/ecb/exchange_rates?' +
+                        'currency=' + currency +
+                        '&startDate=' + startDate +
+                        '&endDate=' + endDate +
+                        '&page=' + page +
+                        '&size=' + size
             });
         }
 

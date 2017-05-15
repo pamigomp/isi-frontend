@@ -5,45 +5,26 @@
 
             .factory('exchangeRatesService', exchangeRatesService);
 
-    exchangeRatesService.$inject = ['dataStorageService', '$q', '$filter'];
+    exchangeRatesService.$inject = ['dataStorageService', '$q'];
 
-    function exchangeRatesService(dataStorageService, $q, $filter) {
+    function exchangeRatesService(dataStorageService, $q) {
         return {
             getExchangeRates: getExchangeRates,
             getCurrenciesList: getCurrenciesList
         };
 
-        function getExchangeRates(currencies, period) {
-            var today = new Date();
-            var previousDay = new Date(today);
-            previousDay.setDate(today.getDate() - 1);
-            var previousWeek = new Date(today);
-            previousWeek.setDate(today.getDate() - 7);
-            var previousMonth = new Date(today);
-            previousMonth.setMonth(today.getMonth() - 1);
-
-            var endDate = $filter('date')(today, "yyyy-MM-dd");
-            var startDate;
-
-            if (period === "DAILY") {
-                startDate = $filter('date')(previousDay, "yyyy-MM-dd");
-            } else if (period === "WEEKLY") {
-                startDate = $filter('date')(previousWeek, "yyyy-MM-dd");
-            } else if (period === "MONTHLY") {
-                startDate = $filter('date')(previousMonth, "yyyy-MM-dd");
-            }
-
+        function getExchangeRates(currencies, startDate, endDate, page, size) {
             var promises = [];
             var itemArray = [];
 
             for (var i in currencies) {
                 var deferred = $q.defer();
                 var promise;
-                if (currencies[i].baseCurrencyCode === "PLN") {
-                    promise = dataStorageService.getExchangeRatesNBP(currencies[i].targetCurrencyCode, startDate, endDate)
+                if (currencies[i].baseCurrencyCode === 'PLN') {
+                    promise = dataStorageService.getExchangeRatesNBP(currencies[i].targetCurrencyCode, startDate, endDate, page, size)
                             .then(getSuccess, getFailure);
-                } else if (currencies[i].baseCurrencyCode === "EUR") {
-                    promise = dataStorageService.getExchangeRatesECB(currencies[i].targetCurrencyCode, startDate, endDate)
+                } else if (currencies[i].baseCurrencyCode === 'EUR') {
+                    promise = dataStorageService.getExchangeRatesECB(currencies[i].targetCurrencyCode, startDate, endDate, page, size)
                             .then(getSuccess, getFailure);
                 }
                 promises.push(promise);
