@@ -24,9 +24,9 @@
         vm.endDate = new Date();
         vm.selectedCurrencies = [
             {
-                baseCurrencyCode: 'PLN',
-                targetCurrencyCode: 'EUR',
-                targetCurrencyName: 'euro'
+                baseCurrencyCode: 'EUR',
+                targetCurrencyCode: 'USD',
+                targetCurrencyName: 'US dollar'
             },
             {
                 baseCurrencyCode: 'PLN',
